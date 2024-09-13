@@ -2,20 +2,19 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_CREDENTIALS_ID = 'dockerhub-credentials' // DockerHub credentials ID
-        GITHUB_CREDENTIALS_ID = 'GitHub_Credentials' // GitHub credentials ID
-        DOCKER_IMAGE_NAME = 'nats000/jenkPro' // DockerHub username and image name
+        // Use the correct credentials IDs you specified
+        DOCKER_CREDENTIALS_ID = 'dockerhub-credentials'  // DockerHub credentials ID
+        GITHUB_CREDENTIALS_ID = 'GitHub_Credentials'     // GitHub credentials ID
+        DOCKER_IMAGE_NAME = 'nats000/jenkPro'             // Replace with your actual DockerHub username and image name
     }
 
     stages {
         stage('Clone GitHub Repository') {
             steps {
                 script {
-                    // Clean up the existing directory if it exists
-                    sh 'rm -rf Jenk-Project'
-
-                    // Clone the repository using GitHub credentials
+                    // Example usage of GitHub credentials if you need to clone a private repo
                     withCredentials([usernamePassword(credentialsId: "${GITHUB_CREDENTIALS_ID}", usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
+                        // Replace 'your-username/your-repo' with your actual GitHub repository details
                         sh 'git clone https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/nmikkoo/Jenk-Project'
                     }
                 }
@@ -39,7 +38,7 @@ pipeline {
                 script {
                     // Log in to Docker Hub using Docker credentials
                     docker.withRegistry('https://index.docker.io/v1/', "${DOCKER_CREDENTIALS_ID}") {
-                        // No additional steps required here
+                        echo 'Logged in successfully.'
                     }
                 }
             }
