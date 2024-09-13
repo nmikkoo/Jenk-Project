@@ -69,10 +69,10 @@ pipeline {
             }
         }
         stage('Cleanup Workspace') {
-    steps {
-        deleteDir() // Deletes everything in the workspace
-    }
-}
+            steps {
+            deleteDir() // Deletes everything in the workspace
+            }
+        }
 
     }
 }
